@@ -27,6 +27,16 @@ class DefaultController extends AbstractController
 	
 		$data["random_gift"] = $gifts->gifts;
 
+		$this->addFlash(
+			"notice",
+			"Your changes were saved!"
+		);
+
+		$this->addFlash(
+			"warning",
+			"There was an error"
+		);
+
         return $this->render('default/index.html.twig', $data);
     }
 
