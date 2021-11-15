@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Services\GiftService;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class DefaultController extends AbstractController
 {
@@ -27,15 +28,31 @@ class DefaultController extends AbstractController
 	
 		$data["random_gift"] = $gifts->gifts;
 
+		// Flash messages
 		$this->addFlash(
 			"notice",
 			"Your changes were saved!"
 		);
 
-		$this->addFlash(
-			"warning",
-			"There was an error"
-		);
+
+		// Cookies
+		// $my_cookie = new Cookie(
+		// 	"cookie_name",
+		// 	23,
+		// 	time() * 60 * 60 * 24 * 50
+		// );
+
+		// $response = new Response();
+		// $response->headers->setCookie($my_cookie);
+		// $response->send();
+		
+		$response = new Response();
+		$response->headers->clearCookie("cookie_name");
+		$response->send();
+	
+		
+
+		
 
         return $this->render('default/index.html.twig', $data);
     }
