@@ -13,6 +13,14 @@
     	<h1>Hello {{ user.name }} you won {{ random_gift[loop.index0] }}! ✅</h1>
 	{% endfor %}
 
+	{% for label, messages in app.flashes %}
+		{% for message in messages %}
+			<div class="flash-{{ label }}">
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endfor %}
+
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code><a href="{{ 'C:/Users/Louis Sutherland/Desktop/udemy-WebDev/symfony/symfony-practice-project/src/Controller/DefaultController.php'|file_link(0) }}">src/Controller/DefaultController.php</a></code></li>
