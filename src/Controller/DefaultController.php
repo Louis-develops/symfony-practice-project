@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -20,7 +21,7 @@ class DefaultController extends AbstractController
 
 
     #[Route('/', name: 'default')]
-    public function index(GiftService $gifts): Response
+    public function index(GiftService $gifts, Request $request): Response
     {
 	
 		$usersRepository = $this->getDoctrine()->getRepository(User::class);
@@ -35,24 +36,21 @@ class DefaultController extends AbstractController
 		);
 
 
-		// Cookies
-		// $my_cookie = new Cookie(
-		// 	"cookie_name",
-		// 	23,
-		// 	time() * 60 * 60 * 24 * 50
-		// );
+		 // Cookies
+		 $my_cookie = new Cookie(
+		 	"cookie_name",
+		 	23,
+		 	time() * 60 * 60 * 24 * 50
+		 );
 
-		// $response = new Response();
-		// $response->headers->setCookie($my_cookie);
-		// $response->send();
-		
-		$response = new Response();
-		$response->headers->clearCookie("cookie_name");
-		$response->send();
-	
-		
+         $response = new Response();
+		 $response->headers->setCookie($my_cookie);
+		 $response->send();
 
-		
+         // Read cookie
+         $read_cookie = $request->cookies->get("cookie_name");
+         $data["read_cookie"] = $read_cookie;
+
 
         return $this->render('default/index.html.twig', $data);
     }
